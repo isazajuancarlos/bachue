@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-password"
+description = "Bachué — cadena de esquemas de contraseña + upgrade oportunista al iniciar sesión (absorbe tumbaga; escritura Argon2id vía guaca, lectores de legado verify-only)."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# Argon2id (el ÚNICO camino de ESCRITURA) y la verificación: una sola implementación
+# en el universo, la de guaca. Mismo rev que bachue-clave (un solo árbol).
+guaca = { path = "../../../guaca" }
+# La caducidad intra-Argon2 (renovar sin abaratar) ya vive aquí, probada. NO se
+# reimplementa (directiva 1): la cadena la reutiliza para el esquema de escritura.
+bachue-clave = { path = "../bachue-clave" }
+# bcrypt SOLO para LEER hashes de legado y migrarlos a Argon2id. Tras la feature
+# `legado` (default OFF): quien no arrastre credenciales viejas no paga la dep, y
+# el build por defecto no necesita crate nuevo. Nunca se ESCRIBE bcrypt.
+bcrypt = { version = "0.15", optional = true }
+
+[features]
+# Lectores de credencial de LEGADO (verify-only) para migración de onboarding.
+legado = ["dep:bcrypt"]
+
+[dev-dependencies]
+# Solo para FABRICAR hashes Argon2 (débil / más fuerte que hoy) en las pruebas y
+# comprobar que la cadena renueva o NO abarata. No es dependencia de producción
+# (el hashing real es de guaca).
+argon2 = "0.5"
+
+[lints]
+workspace = true

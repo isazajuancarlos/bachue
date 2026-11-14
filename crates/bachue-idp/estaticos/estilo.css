@@ -1,0 +1,185 @@
+/* SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+   Bachué IdP — capa de LOGIN sobre el Sistema Boi (/boi.css, cargado antes).
+   Solo layout y el mapeo del marcado propio (h1/label/input/button/.aviso/.pie…)
+   a los tokens de Boi; los tokens, la tipografía y el tema los pone boi.css. */
+
+body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+}
+
+main {
+    width: min(94vw, 440px);
+    background: var(--boi-panel);
+    border: 1px solid var(--boi-borde);
+    border-radius: var(--boi-r-lg);
+    box-shadow: var(--boi-sombra-alta);
+    padding: 2rem 1.9rem;
+}
+
+/* Título de la tarjeta: serif de Boi + subtítulo tenue. */
+h1 {
+    font-family: var(--boi-serif);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin: 0 0 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+h1 small {
+    font-family: var(--boi-sans);
+    font-weight: 500;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    color: var(--boi-tinta-2);
+}
+
+form { display: flex; flex-direction: column; gap: .35rem; }
+
+label {
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--boi-tinta-2);
+    margin-top: .6rem;
+}
+
+input[type="text"], input[type="password"] {
+    font: inherit;
+    color: var(--boi-tinta);
+    background: var(--boi-panel);
+    border: 1px solid var(--boi-borde-fuerte);
+    border-radius: var(--boi-r);
+    padding: .6em .7em;
+    transition: var(--boi-e);
+}
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: var(--boi-acento);
+    box-shadow: 0 0 0 3px var(--boi-anillo);
+}
+
+button {
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    padding: .6em 1.1em;
+    border: 1px solid transparent;
+    border-radius: var(--boi-r);
+    background: var(--boi-acento);
+    color: var(--boi-acento-tinta);
+    transition: var(--boi-e);
+}
+button:hover { filter: brightness(1.07); }
+button:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--boi-anillo); }
+/* El "Salir" y acciones secundarias: sobrio. */
+button.tenue {
+    background: transparent;
+    color: var(--boi-tinta-2);
+    border-color: var(--boi-borde-fuerte);
+    margin-top: .8rem;
+}
+button.tenue:hover { background: var(--boi-panel-2); filter: none; color: var(--boi-tinta); }
+
+/* Avisos: reusan el look de píldora/aviso de Boi. */
+.aviso {
+    margin-top: 1rem;
+    padding: .7rem .85rem;
+    border-radius: var(--boi-r);
+    font-size: .9rem;
+    border: 1px solid var(--boi-borde);
+}
+.aviso.error { background: var(--boi-mal-suave); color: var(--boi-mal); border-color: transparent; }
+.aviso.ok    { background: var(--boi-ok-suave);  color: var(--boi-ok);  border-color: transparent; }
+
+.pie { margin-top: 1.4rem; font-size: .88rem; color: var(--boi-tinta-2); }
+.pie a { color: var(--boi-acento); }
+
+/* Passkeys (F3): botón secundario, separador "o" y la lista de credenciales. */
+button.secundario {
+    background: var(--boi-panel-2);
+    color: var(--boi-tinta);
+    border-color: var(--boi-borde-fuerte);
+    width: 100%;
+    margin-top: .6rem;
+}
+button.secundario:hover { background: var(--boi-panel); filter: none; }
+
+.o-separador {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin: 1.1rem 0 .2rem;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--boi-tinta-2);
+}
+.o-separador::before, .o-separador::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--boi-borde);
+}
+
+section.passkeys {
+    margin-top: 1.6rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--boi-borde);
+    /* No es un <form>, pero sus controles deben APILARSE y estirarse igual que los de uno
+       (sin esto, label/input fluyen en línea y se amontonan). Mismo patrón que `form`. */
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+}
+section.passkeys h2 {
+    font-family: var(--boi-serif);
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin: 0 0 .8rem;
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+}
+section.passkeys h2 small {
+    font-family: var(--boi-sans);
+    font-weight: 500;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--boi-tinta-2);
+}
+ul.passkeys { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: .4rem; }
+ul.passkeys li {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .7rem;
+    background: var(--boi-panel-2);
+    border: 1px solid var(--boi-borde);
+    border-radius: var(--boi-r);
+    font-size: .9rem;
+}
+ul.passkeys li button.tenue { margin: 0 0 0 auto; padding: .25em .7em; font-size: .82rem; }
+
+.tenue { color: var(--boi-tinta-2); }
+
+/* Secreto TOTP a enrolar: mono, destacado en una caja hundida. */
+code.secreto {
+    display: block;
+    font-family: var(--boi-mono);
+    font-size: 1.05rem;
+    letter-spacing: .08em;
+    word-break: break-all;
+    background: var(--boi-panel-2);
+    border: 1px solid var(--boi-borde);
+    border-radius: var(--boi-r);
+    padding: .8rem;
+    margin: .4rem 0 1rem;
+    color: var(--boi-tinta);
+}

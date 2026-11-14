@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-segundopaso"
+description = "Bachué F3.a — el segundo paso del login: orquesta TOTP y códigos de recuperación (guaca::dosfactores + guaca::claves) y unifica el veredicto sin abaratarlo."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# El TOTP (anti-replay por contador, 4 estados) lo hace guaca::dosfactores; el hash de
+# los códigos de recuperación, guaca::claves (Argon2). Aquí va SOLO el flujo que decide
+# cuál se comprueba y unifica el veredicto — ninguna criptografía nueva. Feature
+# `dosfactores` encendida (el TOTP vive detrás de ella en guaca).
+guaca = { path = "../../../guaca", features = ["dosfactores"] }
+
+[lints]
+workspace = true

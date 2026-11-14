@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+#
+# Bachué — librería propia de identidad (autenticación + autorización).
+# El nombre es la deidad muisca del ORIGEN de la humanidad: la fuente de la
+# identidad. Diseño y plan: /mnt/data/conocimiento/proyectos/identidad/DISENO.md
+#
+# Licencia PROVISIONAL propietaria: el momento OSS (F8) es decisión de Juan.
+
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "LicenseRef-Xiliux-Propietario"
+authors = ["Juan Carlos Isaza"]
+rust-version = "1.85"
+
+# Estándar de nacimiento (directiva 26): las DEPENDENCIAS optimizadas también en
+# debug — barato hoy, rinde el día que entre un KDF memory-hard (quipu).
+[profile.dev.package."*"]
+opt-level = 3
+
+# PUERTA de buenas prácticas, no aviso: solo lo que se está dispuesto a BLOQUEAR
+# y que `cargo clippy --fix` limpia a cero (directiva 26, medido).
+[workspace.lints.clippy]
+redundant_clone = "deny"
+needless_collect = "deny"
+
+# quipu (dependencia transitiva vía guaca) está YANKED en crates.io bajo el
+# protocolo solo-local, así que un proyecto nuevo sin Cargo.lock no la resuelve.
+# El `[patch]` la redirige al ESPEJO LOCAL — y SOLO lo honra el paquete RAÍZ del
+# workspace, nunca una dependencia (por eso va aquí). Ruta relativa al espejo
+# hermano (patrón chuspa): un solo árbol de quipu en todo el universo, y compila
+# igual en Windows (Z:) que en el Linux del VPS (sin ruta absoluta de plataforma).
+[patch.crates-io]
+quipu = { path = "../quipu" }

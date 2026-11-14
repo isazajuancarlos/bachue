@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue"
+description = "Bachué — fachada de identidad: el motor de autorización + los primitivos de autenticación (de guaca, una sola copia) + el flujo orquestado."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+bachue-autz = { path = "../bachue-autz" }
+bachue-clave = { path = "../bachue-clave" }
+bachue-sesion = { path = "../bachue-sesion" }
+bachue-segundopaso = { path = "../bachue-segundopaso" }
+bachue-passkey = { path = "../bachue-passkey" }
+bachue-defensas = { path = "../bachue-defensas" }
+bachue-opaque = { path = "../bachue-opaque" }
+bachue-password = { path = "../bachue-password" }
+# Los PRIMITIVOS de autenticación NO se copian (directiva 1): viven en guaca, una
+# sola vez en todo el universo. Ruta relativa al MISMO árbol de guaca que
+# medico/informes/tunjo (espejo hermano, protocolo solo-local; patrón chuspa).
+# NOTA JURÍDICA (Juan): guaca es AGPL-3.0; resolver antes de vender/liberar Bachué (F8).
+guaca = { path = "../../../guaca", features = ["dosfactores"] }
+
+[features]
+# Migración de credenciales de LEGADO (bcrypt, verify-only) en la cadena de
+# esquemas. Passthrough a `bachue-password/legado`; default OFF (quien no arrastra
+# hashes viejos no paga la dep bcrypt).
+legado = ["bachue-password/legado"]
+
+[dev-dependencies]
+# Solo para el test de integración del login por passkey (arma el mensaje de la spec).
+sha2 = "0.10"
+
+[lints]
+workspace = true

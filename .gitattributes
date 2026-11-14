@@ -1,0 +1,7 @@
+# Saltos de línea normalizados a LF. Crítico para las migraciones: sqlx embebe el
+# SHA-384 del .sql en el binario y lo valida contra el checksum guardado en la BD;
+# un .sql que drifta de LF a CRLF (p. ej. al compilar en Windows) cambia el checksum
+# y el binario se niega a arrancar ("migration N ... has been modified") aunque el SQL
+# sea idéntico. Pasó con 0006_passkeys.sql el 2026-10-18.
+* text=auto eol=lf
+*.sql text eol=lf

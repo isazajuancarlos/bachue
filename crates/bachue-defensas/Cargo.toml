@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-defensas"
+description = "Bachué — defensas transversales de borde (F5): IP de cliente confiable (para el freno), validación de redirects, saneo de entorno para procesos hijo."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+# SIN dependencias, y es deliberado (directiva 1/35): `std` basta para todo —IpAddr
+# para las direcciones, comparación de bytes para las rutas—. No se mete `url` por
+# inercia: el redirect seguro es ruta-relativa o allowlist por IGUALDAD EXACTA
+# (como OAuth manda comparar `redirect_uri`), y parsear-para-comparar-host abre la
+# clase de fallo por diferencia de parser que la lección deriv señala.
+[dependencies]
+
+[lints]
+workspace = true

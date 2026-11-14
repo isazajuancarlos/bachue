@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-opaque"
+description = "Bachué — credencial tipo OPAQUE (F6): registro/login sobre VOPRF donde el servidor nunca ve la contraseña ni un hash reversible. El diferenciador PQ."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+# UNA sola dependencia, y es deliberado (D1: no meter cripto que quipu no tiene por
+# inercia). Todo el material criptográfico sale de quipu, redirigido al ESPEJO LOCAL
+# por el `[patch.crates-io]` de la RAÍZ del workspace (mismo rev que guaca/medico/
+# informes: un solo árbol de quipu en todo el universo):
+#   - `quipu::voprf::rfc9497`  el VOPRF (quipu re-exporta `quipu_voprf as voprf`)
+#   - `quipu::kdf`             Argon2id (endurecimiento) + HKDF-Expand (derive_subkey/stream)
+#   - `quipu::pqsign`          firma híbrida Ed25519+ML-DSA-87 (la prueba de login, PQ)
+#   - `quipu::aleatorio`       CSPRNG para los caminos de conveniencia
+# NOTA JURÍDICA (Juan): quipu es la base; resolver licencia antes de liberar Bachué (F8).
+[dependencies]
+quipu = { version = "0.15" }
+# NFKC para normalizar la contraseña ANTES de cegarla, y que la capa OPRF (bytes) y la
+# capa Argon2id (que normaliza NFKC por dentro) traten "la misma contraseña" igual —si
+# no, una tilde compuesta distinto entre plataformas es otra credencial (rev. D25). Es
+# el MISMO crate que quipu usa por dentro y ya está en el árbol: no es cripto nueva.
+unicode-normalization = "0.1"
+
+[lints]
+workspace = true

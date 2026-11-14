@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-clave"
+description = "Bachué F1 — autenticación por contraseña: el flujo (hash de descarte anti-timing, política) sobre el Argon2 de guaca."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# El Argon2 lo hace guaca (una sola implementación); aquí va el FLUJO alrededor.
+guaca = { path = "../../../guaca" }
+# argon2 SOLO para LEER los parámetros de un hash guardado (m, t, variante, versión)
+# y decidir si renovarlo. El hashing en sí sigue en guaca; aquí no se produce ningún
+# hash de producción con argon2 directo. Misma versión que guaca (un solo argon2).
+argon2 = "0.5"
+
+[lints]
+workspace = true

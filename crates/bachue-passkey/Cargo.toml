@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-passkey"
+description = "Bachué F3.b — autenticación por passkey (WebAuthn assertion): todo el andamiaje (challenge, clientData, authData, rpIdHash, flags, contador anti-clonación); la verificación de firma va tras un trait (la decisión de cripto es aparte)."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# SHA-256 estándar (RFC 6234), que WebAuthn EXIGE sobre clientDataJSON y sobre rpId. No
+# es "cripto propia": es un hash estándar y quipu no lo expone suelto. Misma versión que
+# ya resuelve el árbol (guaca/quipu traen 0.10.9), para no duplicar la pila.
+sha2 = "0.10"
+# Azar del challenge. `getrandom` vía rand_core::OsRng, el mismo que usa guaca.
+rand_core = { version = "0.6", features = ["getrandom"] }
+
+[lints]
+workspace = true

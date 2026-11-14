@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-sesion"
+description = "Bachué F2 — sesiones y TIPOS de token: cada tipo firma en su dominio, y un token de un tipo no vale como otro. Sobre guaca::sesion."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+guaca = { path = "../../../guaca" }
+
+[lints]
+workspace = true

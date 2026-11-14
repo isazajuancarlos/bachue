@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-autz"
+description = "El motor ÚNICO de autorización de Bachué: una sola puerta, contra el owner del recurso, fail-closed."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+
+[lints]
+workspace = true

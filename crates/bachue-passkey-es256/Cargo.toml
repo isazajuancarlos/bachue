@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-passkey-es256"
+description = "Bachué F3.b — el VerificadorDeFirma de passkeys ES256 (ECDSA P-256), sobre la dep p256 de RustCrypto. Crate aparte: solo lo trae quien use passkeys ES256."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+bachue-passkey = { path = "../bachue-passkey" }
+# ECDSA sobre P-256, la librería de referencia RustCrypto. Es la pieza de cripto que
+# quipu NO tiene (firma híbrido Ed25519+ML-DSA-87) y que las passkeys ES256 exigen;
+# decisión de Juan (2026-08-30): dep auditada antes que reimplementar P-256. `ecdsa` trae
+# la verificación con SHA-256 incorporada (lo que pide WebAuthn para alg −7).
+p256 = { version = "0.14", default-features = false, features = ["ecdsa"] }
+
+[dev-dependencies]
+# Solo para las pruebas: generar un par, firmar, y armar el mensaje de la spec.
+p256 = { version = "0.14", default-features = false, features = ["ecdsa"] }
+getrandom = "0.4"
+sha2 = "0.10"
+
+[lints]
+workspace = true

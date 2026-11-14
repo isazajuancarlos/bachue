@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: LicenseRef-Xiliux-Propietario
+# Copyright (c) 2026 Juan Carlos Isaza
+
+[package]
+name = "bachue-oidc"
+description = "Bachué — cimiento cripto del proveedor OIDC (veta mindalá #1, rebanada 1): id_token JWT firmado ES256 (P-256) y clave pública en JWK/JWKS. PURO (sin axum ni db) e INERTE hasta que las rutas lo cableen; la firma asimétrica es lo que un id_token exige y bachue-sesion (HMAC) no da."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# ECDSA P-256: la misma curva y la misma dep RustCrypto que bachue-passkey-es256 (alg −7 /
+# ES256). Un id_token OIDC se firma asimétrico para que el RP lo verifique por JWKS.
+p256 = { version = "0.14", default-features = false, features = ["ecdsa"] }
+# Azar del SO para GENERAR la clave de firma del emisor (vía el adaptador RngDelSo→getrandom,
+# porque el ecosistema `rand` aún no expone OsRng para rand_core 0.10). Ya en el árbol.
+getrandom = "0.4"
+# El id_token y el JWK son JSON. serde_json ya es dep transitiva del árbol.
+serde_json = "1"
+# SHA-256: derivar la clave del emisor de un secreto maestro (dominio-separado) y el `kid`
+# como huella de la clave pública. Ya en el árbol (guaca/passkey lo usan).
+sha2 = "0.10"
+
+[dev-dependencies]
+p256 = { version = "0.14", default-features = false, features = ["ecdsa"] }
+
+[lints]
+workspace = true
